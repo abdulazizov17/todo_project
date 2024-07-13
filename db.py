@@ -4,7 +4,7 @@ from models import UserRole, UserStatus
 db_params = {
     'database': 'n48',
     'user': 'postgres',
-    'password': '1',
+    'password': 'qazwsx',
     'host': 'localhost',
     'port': 5432
 }
@@ -12,7 +12,7 @@ db_params = {
 conn = psycopg2.connect(**db_params)
 cursor = conn.cursor()
 
-create_user_query = """create table if not exists users(
+create_user_query = """create table if not exists userse(
     id serial PRIMARY KEY,
     username varchar(100) unique not null,
     password varchar(255) not null,
@@ -39,7 +39,7 @@ def create_table():
 
 def migrate():
     insert_admin_user_query = """
-    insert into users(username, password, role, status, login_try_count)
+    insert into userse(username, password, role, status, login_try_count)
     values (%s,%s,%s,%s,%s);
     """
     user_data = ('admin', '123', UserRole.ADMIN.value, UserStatus.ACTIVE.value, 0)
