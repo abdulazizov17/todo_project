@@ -31,6 +31,15 @@ create_todo_query = """create table if not exists todo(
 );
 """
 
+def todo_update(todo_id, name, description):
+    try:
+        with psycopg2.connect(db_params) as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE todos SET name = ?, description = ? WHERE id = ?", (name, description, todo_id))
+            conn.commit()
+        return Response(200, 'Todo updated successfully')
+    except Exception as e:
+        return Response(500, f'Error: {str(e)}')
 
 def create_table():
     cursor.execute(create_user_query)
